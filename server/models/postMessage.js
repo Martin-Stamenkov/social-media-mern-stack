@@ -11,7 +11,8 @@ const postSchema = Schema({
     type: String,
     required: true
   },
-  // creator: String,
+  name: String,
+  creatorId: String,
   createdAt: {
     type: Date,
     default: new Date(),

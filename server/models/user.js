@@ -16,6 +16,13 @@ const userSchema = Schema({
     required: true
   },
   id: String,
+  posts: {
+    type: []
+  },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const User = model("User",  userSchema);

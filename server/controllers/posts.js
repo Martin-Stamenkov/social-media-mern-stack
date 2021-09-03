@@ -27,10 +27,13 @@ export const getPostDetails = async (req, res) => {
   }
 };
 
-
 export const createPost = async (req, res) => {
   const post = req.body;
-  const newPost = new PostMessage(post);
+  const newPost = new PostMessage({
+    ...post,
+    creatorId: req.userId,
+    createdAt: new Date().toISOString(),
+  });
   try {
     await newPost.save();
 
@@ -48,8 +51,10 @@ export const updatePost = async (req, res) => {
     return res.status(404).send("No post with that id");
   }
 
- const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {new: true});
-  res.json(updatedPost)
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+    new: true,
+  });
+  res.json(updatedPost);
 };
 
 export const deletePost = async (req, res) => {
@@ -60,5 +65,5 @@ export const deletePost = async (req, res) => {
   }
 
   await PostMessage.findByIdAndRemove(id);
-  res.json({message: "Post deleted successfully"})
+  res.json({ message: "Post deleted successfully" });
 };

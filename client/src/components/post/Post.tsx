@@ -25,14 +25,19 @@ export interface IPost {
     selectedFile: string,
     tags: string[],
     createdAt?: string,
-    setCurrentId?: any
+    setCurrentId?: any,
+    creatorId?: string,
+    name?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            maxWidth: 345,
-            flex: "50%",
+            maxWidth: 360,
+            width: 360,
+            maxHeight: 430,
+            height: 430,
+            // flex: "50%",
             margin: 16
         },
         media: {
@@ -45,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export function Post({ _id, title, message, selectedFile, tags, createdAt, setCurrentId }: IPost) {
+export function Post({ _id, title, name, message, selectedFile, tags, createdAt, setCurrentId }: IPost) {
     const classes = useStyles();
     const dispatch = useDispatch()
 
@@ -62,7 +67,7 @@ export function Post({ _id, title, message, selectedFile, tags, createdAt, setCu
                         <MoreHorizonIcon />
                     </IconButton>
                 }
-                title={title}
+                title={name}
                 subheader={moment(createdAt).fromNow()}
             />
             {selectedFile ? <CardMedia
@@ -70,12 +75,15 @@ export function Post({ _id, title, message, selectedFile, tags, createdAt, setCu
                 image={selectedFile}
             /> : <Spinner size={20} />}
             <CardContent>
+                {tags.length > 0 ? <Typography variant="body2" color="textSecondary" component="p">
+                    {tags.map((tag: string) => ` #${tag}`)}
+                </Typography> : <Box height="20px" />}
+                <Typography variant="subtitle1" color="inherit" component="h1">
+                    {title}
+                </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {message}
                 </Typography>
-                {tags.length > 0 ? <Typography variant="body2" color="textSecondary" component="p">
-                    {tags.map((tag: string) => ` #${tag}`)}
-                </Typography> : null}
             </CardContent>
             <Box display="flex" justifyContent="space-between">
                 <IconButton aria-label="like">

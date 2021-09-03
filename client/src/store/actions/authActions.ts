@@ -10,8 +10,9 @@ export const googleAuthLogin = (data: any) => (dispatch: ThunkDispatch<void, voi
         dispatch({ type: AUTH_SUCCESS, payload: data })
     } catch (error) {
         if (error) {
+            dispatch({ type: AUTH_FAILURE, payload: error })
         } else {
-            console.log(error.message)
+            console.log(error)
         }
     }
 }
@@ -24,7 +25,12 @@ export const login = (formData: IFormData, history: History) => async (dispatch:
 
         history.push("/")
     } catch (error) {
-        dispatch({ type: AUTH_FAILURE })
+        if (error) {
+            console.log(error)
+            dispatch({ type: AUTH_FAILURE, payload: error })
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -36,7 +42,11 @@ export const register = (formData: IFormData, history: History) => async (dispat
 
         history.push("/")
     } catch (error) {
-        dispatch({ type: AUTH_FAILURE })
+        if (error) {
+            dispatch({ type: AUTH_FAILURE, payload: error })
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -46,7 +56,7 @@ export const logout = () => (dispatch: ThunkDispatch<void, void, Action>) => {
     } catch (error) {
         if (error) {
         } else {
-            console.log(error.message)
+            console.log(error)
         }
     }
 }

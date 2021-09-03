@@ -8,6 +8,7 @@ import { Store } from 'store/types/types';
 import { updatePost } from 'store/actions/postsActions';
 import { IPost } from 'components/post/Post';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
+import { Storage } from 'storage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,10 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "10%"
 
         }
-        // errors: {
-        //     margin: "0px 0px 6px 8px",
-        //     color: red[500]
-        // }
+
     }),
 );
 
@@ -54,22 +52,23 @@ export function Form({ currentId, setCurrentId }: IForm) {
     });
     const { postLoading } = useSelector((state: Store) => state?.postsReducer)
     const post = useSelector((state: Store) => currentId ? state?.postsReducer.posts.find(p => p._id === currentId) : null);
-    const isInvalid = (postData.title === "" || postData.message === "" || postData.selectedFile === "")
+    const isInvalid = (postData.title === "" || postData.message === "" || postData.selectedFile === "");
+    const user = JSON.parse(Storage.getItem("profile") || "null")
 
     useEffect(() => {
         if (post) {
             setPostData(post)
         }
     }, [post])
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!currentId) {
-            dispatch(createNewPost(postData))
+            dispatch(createNewPost({ ...postData, name: user?.result?.name }))
         } else {
-            dispatch(updatePost(currentId.toString(), postData))
+            dispatch(updatePost(currentId.toString(), { ...postData, name: user?.result?.name }))
         }
-        clear()
+        clear();
     }
 
 
@@ -142,7 +141,6 @@ export function Form({ currentId, setCurrentId }: IForm) {
                         accept="image/*"
                         className={classes.inputFile}
                         id="upload-file"
-                        // variant="outlined"
                         type="file"
                         onChange={(e: ChangeEvent<HTMLInputElement>) => uploadImage(e)}
                     />

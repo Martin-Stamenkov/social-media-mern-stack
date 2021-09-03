@@ -34,8 +34,6 @@ export function Header() {
         setUser(JSON.parse((Storage.getItem("profile") || "null")))
     }, [location])
 
-    console.log(user);
-
     const handleLoginClick = () => {
         if (user) {
             dispatch(logout())

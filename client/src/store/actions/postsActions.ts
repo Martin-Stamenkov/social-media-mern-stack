@@ -11,10 +11,10 @@ export const getPosts = () => async (dispatch: ThunkDispatch<void, void, Action>
         dispatch({ type: FETCH_ALL_SUCCESS, payload: data })
     } catch (error) {
         if (error) {
-            dispatch({ type: FETCH_ALL_FAIL, payload: error.message })
+            dispatch({ type: FETCH_ALL_FAIL, payload: error })
 
         } else {
-            console.log(error.message)
+            console.log(error)
         }
     }
 }
@@ -26,9 +26,9 @@ export const createNewPost = (newPost: ICreatePost) => async (dispatch: ThunkDis
         dispatch({ type: CREATE_POST_SUCCESS, payload: data })
     } catch (error) {
         if (error) {
-            dispatch({ type: CREATE_POST_FAIL, payload: error.message })
+            dispatch({ type: CREATE_POST_FAIL, payload: error })
         } else {
-            console.log(error.message)
+            console.log(error)
         }
     }
 }
@@ -40,9 +40,9 @@ export const updatePost = (id: string, updatedPost: ICreatePost) => async (dispa
         dispatch({ type: UPDATE_POST_SUCCESS, payload: data })
     } catch (error) {
         if (error) {
-            dispatch({ type: UPDATE_POST_SUCCESS, payload: error.message })
+            dispatch({ type: UPDATE_POST_SUCCESS, payload: error })
         } else {
-            console.log(error.message)
+            console.log(error)
         }
     }
 }
@@ -52,6 +52,6 @@ export const removePost = (id: string) => async (dispatch: ThunkDispatch<void, v
         await api.deletePost(id)
         dispatch({ type: "DELETE", payload: id })
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
     }
 }

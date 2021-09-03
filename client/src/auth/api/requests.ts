@@ -1,5 +1,6 @@
-import axios from "axios";
 import { loginUrl, registerUrl } from "./endpoints";
+import { API } from "api/endpoints"
+
 
 export interface IFormData {
     firstName: string,
@@ -10,9 +11,9 @@ export interface IFormData {
 }
 
 export const login = async (data: IFormData) => {
-    return await axios.post(loginUrl, data)
+    return await API.post(loginUrl, data)
 }
 
 export const register = async (data: IFormData) => {
-    return await axios.post(registerUrl, data)
+    return await API.post(registerUrl, data)
 }

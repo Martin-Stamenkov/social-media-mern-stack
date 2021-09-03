@@ -2,7 +2,7 @@ import { AuthForm } from 'auth'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import { Home } from 'screens'
+import { Home, Profile } from 'screens'
 import { getPosts } from 'store'
 
 export function Router() {
@@ -16,6 +16,7 @@ export function Router() {
         <>
             <Switch>
                 <Route exact path={"/"} component={Home} />
+                <Route exact path={"/profile"} component={Profile} />
                 <Route exact path={"/auth"} component={AuthForm} />
             </Switch>
         </>

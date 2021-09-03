@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-around",
             marginTop: "30px",
             [theme.breakpoints.between(280, 600)]: {
                 flexDirection: "column-reverse"
@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         posts: {
-            display: "flex",
-            flexWrap: "wrap",
-            width: "50%",
+            // display: "flex",
+            // flexWrap: "wrap",
+            // width: "50%",
             [theme.breakpoints.between(280, 600)]: {
                 width: "100%",
             }

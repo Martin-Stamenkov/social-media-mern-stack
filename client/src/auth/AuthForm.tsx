@@ -6,6 +6,7 @@ import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from "re
 import { useDispatch, useSelector } from 'react-redux';
 import { googleAuthLogin, login, register } from 'store';
 import { useHistory } from 'react-router';
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         spinner: {
             marginRight: 12
+        },
+        errors: {
+            margin: "0px 0px 6px 8px",
+            color: red[500]
         }
     }),
 );
@@ -44,7 +49,7 @@ export function AuthForm() {
         password: "",
         confirmPassword: "",
     });
-    const { loading, error } = useSelector((state: any) => state.authReducer)
+    const { loading } = useSelector((state: any) => state.authReducer)
 
     const responseGoogleSuccess = async (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
 
@@ -79,51 +84,51 @@ export function AuthForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    console.log(isRegister)
-
     return (
-        <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="on">
-            <Paper className={classes.container}>
-                <Box display="flex" alignItems="center" flexDirection="column">
-                    <LockIcon color="secondary" />
-                    <Typography gutterBottom variant="h6">{!isRegister ? "Login" : "Register"}</Typography>
-                </Box>
-                {isRegister ?
-                    <Box display="flex">
-                        <TextField onChange={handleChange} id="first-name" name="firstName" variant="outlined" label="First Name" required />
-                        <TextField onChange={handleChange} id="last-name" name="lastName" variant="outlined" label="Last Name" required />
+        <Box display="flex" justifyContent="center">
+            <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="on">
+                <Paper className={classes.container}>
+                    <Box display="flex" alignItems="center" flexDirection="column">
+                        <LockIcon color="secondary" />
+                        <Typography gutterBottom variant="h6">{!isRegister ? "Login" : "Register"}</Typography>
                     </Box>
-                    : null
-                }
-                <TextField onChange={handleChange} id="email" name="email" variant="outlined" label="Email Address" required />
-                <TextField onChange={handleChange} id="password" name="password" variant="outlined" label="Password" type="password" required />
-                {isRegister ?
-                    <TextField onChange={handleChange} id="confirm-password" name="confirmPassword" variant="outlined" label="Confirm Password" type="password" required />
-                    : null
-                }
-                <Spacer height={8} />
-                <Button disabled={loading} variant="contained" type="submit" color="primary">
-                    {loading ? <Spinner className={classes.spinner} size={12} /> : null}
-                    <Typography>
-                        {!isRegister ? "Login" : "Register"}
+                    {isRegister ?
+                        <Box display="flex">
+                            <TextField onChange={handleChange} id="first-name" name="firstName" variant="outlined" label="First Name" required />
+                            <TextField onChange={handleChange} id="last-name" name="lastName" variant="outlined" label="Last Name" required />
+                        </Box>
+                        : null
+                    }
+                    <TextField onChange={handleChange} id="email" name="email" variant="outlined" label="Email Address" required />
+                    <TextField onChange={handleChange} id="password" name="password" variant="outlined" label="Password" type="password" required />
+                    {isRegister ?
+                        <TextField onChange={handleChange} id="confirm-password" name="confirmPassword" variant="outlined" label="Confirm Password" type="password" required />
+                        : null
+                    }
+                    <Spacer height={8} />
+                    <Button disabled={loading} variant="contained" type="submit" color="primary">
+                        {loading ? <Spinner className={classes.spinner} size={12} /> : null}
+                        <Typography>
+                            {!isRegister ? "Login" : "Register"}
+                        </Typography>
+                    </Button>
+                    <Spacer height={8} />
+                    <GoogleLogin
+                        clientId="762722917664-udo1c1ne62migcjkr3ghn62u01ps2u7o.apps.googleusercontent.com"
+                        onSuccess={responseGoogleSuccess}
+                        onFailure={responseGoogleFailure}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    <Typography variant="caption" gutterBottom>{!isRegister ? "Don`t you have an account?" : "Already have an account"}
+                        <Typography
+                            onClick={switchMode}
+                            className={classes.captionLoginText}
+                            color="primary" variant="overline">
+                            {isRegister ? "Login" : "Register"}
+                        </Typography>
                     </Typography>
-                </Button>
-                <Spacer height={8} />
-                <GoogleLogin
-                    clientId="762722917664-udo1c1ne62migcjkr3ghn62u01ps2u7o.apps.googleusercontent.com"
-                    onSuccess={responseGoogleSuccess}
-                    onFailure={responseGoogleFailure}
-                    cookiePolicy={'single_host_origin'}
-                />
-                <Typography variant="caption" gutterBottom>{!isRegister ? "Don`t you have an account?" : "Already have an account"}
-                    <Typography
-                        onClick={switchMode}
-                        className={classes.captionLoginText}
-                        color="primary" variant="overline">
-                        {isRegister ? "Login" : "Register"}
-                    </Typography>
-                </Typography>
-            </Paper>
-        </form >
+                </Paper>
+            </form >
+        </Box>
     )
 }

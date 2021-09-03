@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import PostMessage from "../models/postMessage.js";
 
 import User from "../models/user.js";
 
@@ -66,3 +67,18 @@ export const register = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+    const postMessages = await PostMessage.find();
+    user.posts = postMessages.filter((post) => post.creatorId === id)
+    res.send(user)
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error)
+  }
+}

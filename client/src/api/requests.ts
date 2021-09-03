@@ -1,25 +1,27 @@
 import axios from "axios";
-import { postUrl } from "./endpoints";
+import { API, postUrl } from "./endpoints";
 
 export interface ICreatePost {
     title: string,
     message: string,
     tags: string[],
-    selectedFile: string
+    selectedFile: string,
+    creatorId?: string,
+    name?: string
 }
 
 export const fetchPosts = async () => {
-    return await axios.get(postUrl)
+    return await API.get(postUrl)
 }
 
 export const createPost = async (data: ICreatePost) => {
-    return await axios.post(postUrl, data)
+    return await API.post(postUrl, data)
 }
 
 export const updatePost = async (id: string, updatedData: ICreatePost) => {
-    return await axios.patch(`${postUrl}/${id}`, updatedData)
+    return await API.patch(`${postUrl}/${id}`, updatedData)
 }
 
 export const deletePost = async (id: string) => {
-    return await axios.delete(`${postUrl}/${id}`)
+    return await API.delete(`${postUrl}/${id}`)
 }

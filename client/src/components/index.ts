@@ -1,6 +1,4 @@
-export { Form } from "./form/Form"
 export { Layout } from "./layout/Layout"
-export { Post } from "./post/Post"
-export { PostsList } from "./post/PostsList"
+
 export { Spacer } from "./spacer/Spacer"
 export { Spinner } from "./spinner/Spinner"

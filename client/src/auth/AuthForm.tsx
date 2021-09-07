@@ -4,9 +4,9 @@ import LockIcon from '@material-ui/icons/Lock';
 import { Spacer, Spinner } from 'components';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login"
 import { useDispatch, useSelector } from 'react-redux';
-import { googleAuthLogin, login, register } from 'store';
 import { useHistory } from 'react-router';
 import { red } from '@material-ui/core/colors';
+import { googleAuthLogin, register, login } from 'auth';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

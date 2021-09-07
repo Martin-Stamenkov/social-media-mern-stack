@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API, postUrl } from "./endpoints";
+import { API } from "api";
+import { postUrl } from "./endpoints";
 
 export interface ICreatePost {
     title: string,

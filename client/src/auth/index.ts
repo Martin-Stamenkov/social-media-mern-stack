@@ -1,3 +1,5 @@
 export { AuthForm } from "./AuthForm"
 export * as api from "./api/requests"
+export * from "./actions/authActions"
+export * from "./reducers/authReducer"
 export type { IFormData } from "./api/requests"

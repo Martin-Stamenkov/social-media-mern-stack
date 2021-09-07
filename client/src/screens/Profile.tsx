@@ -4,10 +4,9 @@ import logo512 from "assets/logo512.png"
 
 export function Profile() {
     return (
-        <Box>
+        <Box display="flex" justifyContent="center">
             <img style={{
-                width: "20%",
-                height: "20%",
+                width: 250,
                 borderRadius: "50%",
                 boxShadow: "3px 0px 18px #2f2a2a",
             }} alt="avatar" src={logo512} />

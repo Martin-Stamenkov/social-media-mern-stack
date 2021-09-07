@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, createStyles, makeStyles, Theme } from '@material-ui/core'
-import { Form, Spinner } from 'components'
+import {  Spinner } from 'components'
 import { useSelector } from 'react-redux'
-import { PostsList } from 'components'
-import { Store } from 'store/types/types'
+import { PostsList, Form, } from 'post'
+import { Store } from 'store'
 import { useState } from 'react'
 
 const useStyles = makeStyles((theme: Theme) =>

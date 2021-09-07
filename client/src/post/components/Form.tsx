@@ -1,12 +1,11 @@
 import React, { ChangeEvent, SetStateAction, useEffect } from 'react'
 import { Box, Button, createStyles, IconButton, makeStyles, Paper, TextField, Theme, Typography } from '@material-ui/core'
 import { useState } from 'react';
-import { Spacer } from '../spacer';
+import { Spacer } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewPost } from 'store';
-import { Store } from 'store/types/types';
-import { updatePost } from 'store/actions/postsActions';
-import { IPost } from 'components/post/Post';
+import { Store } from 'store';
+import { createNewPost, updatePost } from '../actions';
+import { IPost } from 'post/components/Post';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import { Storage } from 'storage';
 

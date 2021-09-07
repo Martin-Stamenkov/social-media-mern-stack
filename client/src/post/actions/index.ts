@@ -1,0 +1,1 @@
+export { createNewPost, getPosts, removePost, updatePost } from "./postsActions"

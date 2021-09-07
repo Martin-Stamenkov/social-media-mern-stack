@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { Storage } from 'storage';
 import { useDispatch } from 'react-redux';
-import { logout } from 'store';
+import { logout } from 'auth';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

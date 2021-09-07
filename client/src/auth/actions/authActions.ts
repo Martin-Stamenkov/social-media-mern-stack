@@ -1,7 +1,7 @@
 import { api, IFormData } from "auth"
 import { Action } from "redux"
 import { ThunkDispatch } from "redux-thunk"
-import { AUTH_FAILURE, AUTH_SUCCESS, AUTH_REQUEST, LOGOUT } from "store"
+import { AUTH_FAILURE, AUTH_SUCCESS, AUTH_REQUEST, LOGOUT, GET_USER_REQUEST, GET_USER_FAILURE, GET_USER_SUCCESS } from "../types"
 import { History } from 'history';
 
 
@@ -55,6 +55,22 @@ export const logout = () => (dispatch: ThunkDispatch<void, void, Action>) => {
         dispatch({ type: LOGOUT })
     } catch (error) {
         if (error) {
+        } else {
+            console.log(error)
+        }
+    }
+}
+
+export const getUser = (id: string) => async (dispatch: ThunkDispatch<void, void, Action>) => {
+    dispatch({ type: GET_USER_REQUEST })
+    try {
+        const { data } = await api.getUser(id)
+        dispatch({ type: GET_USER_SUCCESS, payload: data })
+
+    } catch (error) {
+        if (error) {
+            console.log(error)
+            dispatch({ type: GET_USER_FAILURE, payload: error })
         } else {
             console.log(error)
         }

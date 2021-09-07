@@ -1,6 +1,14 @@
-import { IPost } from "components/post/Post"
-import { FETCH_ALL_REQUEST, FETCH_ALL_SUCCESS } from "store"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, FETCH_ALL_FAIL, UPDATE_POST_SUCCESS } from "store/types/types"
+import { IPost } from "post"
+import {
+    FETCH_ALL_REQUEST,
+    FETCH_ALL_SUCCESS,
+    FETCH_ALL_FAIL,
+    CREATE_POST_REQUEST,
+    CREATE_POST_SUCCESS,
+    CREATE_POST_FAIL,
+    UPDATE_POST_SUCCESS
+} from "../types"
+
 
 const initialState = {
     posts: [] || null,

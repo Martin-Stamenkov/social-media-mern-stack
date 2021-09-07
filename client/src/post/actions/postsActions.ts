@@ -1,8 +1,7 @@
+import { api, ICreatePost } from "../api"
 import { Action } from "redux"
 import { ThunkDispatch } from "redux-thunk"
-import { api, ICreatePost } from "api"
-import { FETCH_ALL_SUCCESS, FETCH_ALL_REQUEST } from "store"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, FETCH_ALL_FAIL, UPDATE_POST_SUCCESS } from "store/types/types"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, FETCH_ALL_FAIL, UPDATE_POST_SUCCESS, FETCH_ALL_SUCCESS, FETCH_ALL_REQUEST } from "../types"
 
 export const getPosts = () => async (dispatch: ThunkDispatch<void, void, Action>) => {
     dispatch({ type: FETCH_ALL_REQUEST })

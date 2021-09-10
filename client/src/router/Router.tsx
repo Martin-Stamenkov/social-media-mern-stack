@@ -4,14 +4,22 @@ import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { Home, Profile } from 'screens'
 import { getPosts } from 'post'
-import { Storage } from 'storage'
+import { GET_USER_SUCCESS } from 'auth/types'
+import { userData } from 'utils'
 
 export function Router() {
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getPosts())
-        dispatch(getUser(JSON.parse(Storage.getItem("profile") || "null")?.result._id))
+        if (userData) {
+            if (userData.result?._id) {
+                dispatch(getUser(userData.result?._id))
+            } else {
+                const userGoogle = userData
+                dispatch({ type: GET_USER_SUCCESS, payload: userGoogle })
+            }
+        }
     }, [dispatch])
 
     return (

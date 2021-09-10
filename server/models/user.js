@@ -23,6 +23,9 @@ const userSchema = Schema({
     type: Date,
     default: new Date(),
   },
+  imageUrl: {
+    type: String,
+  }
 });
 
 const User = model("User",  userSchema);

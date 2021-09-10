@@ -1,4 +1,4 @@
-import { getUserUrl, loginUrl, registerUrl } from "./endpoints";
+import { getUserUrl, loginUrl, registerUrl, uploadUserPhotoUrl } from "./endpoints";
 import { API } from "api/endpoints"
 
 
@@ -20,4 +20,8 @@ export const register = async (data: IFormData) => {
 
 export const getUser = async (id: string) => {
     return await API.get(getUserUrl(id))
+}
+
+export const uploadUserPhoto = async (id: string, data: string) => {
+    return await API.patch(uploadUserPhotoUrl(id), { data })
 }

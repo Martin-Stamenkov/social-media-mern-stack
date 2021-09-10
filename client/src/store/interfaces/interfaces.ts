@@ -6,5 +6,6 @@ export interface Store {
         loading: boolean;
         error: string;
         postLoading: boolean;
+        userPosts: IPost[];
     }
 }

@@ -1,7 +1,7 @@
 import { api, ICreatePost } from "../api"
 import { Action } from "redux"
 import { ThunkDispatch } from "redux-thunk"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, FETCH_ALL_FAIL, UPDATE_POST_SUCCESS, FETCH_ALL_SUCCESS, FETCH_ALL_REQUEST } from "../types"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, FETCH_ALL_FAIL, UPDATE_POST_SUCCESS, FETCH_ALL_SUCCESS, FETCH_ALL_REQUEST, CLEAR_USER_POSTS } from "../types"
 
 export const getPosts = () => async (dispatch: ThunkDispatch<void, void, Action>) => {
     dispatch({ type: FETCH_ALL_REQUEST })
@@ -35,7 +35,6 @@ export const createNewPost = (newPost: ICreatePost) => async (dispatch: ThunkDis
 export const updatePost = (id: string, updatedPost: ICreatePost) => async (dispatch: ThunkDispatch<void, void, Action>) => {
     try {
         const { data } = await api.updatePost(id, updatedPost)
-        console.log(data)
         dispatch({ type: UPDATE_POST_SUCCESS, payload: data })
     } catch (error) {
         if (error) {
@@ -52,5 +51,16 @@ export const removePost = (id: string) => async (dispatch: ThunkDispatch<void, v
         dispatch({ type: "DELETE", payload: id })
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const clearUserPosts = () => (dispatch: ThunkDispatch<void, void, Action>) => {
+    try {
+        dispatch({ type: CLEAR_USER_POSTS })
+    } catch (error) {
+        if (error) {
+        } else {
+            console.log(error)
+        }
     }
 }

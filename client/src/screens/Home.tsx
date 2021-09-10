@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, createStyles, makeStyles, Theme } from '@material-ui/core'
-import {  Spinner } from 'components'
-import { useSelector } from 'react-redux'
-import { PostsList, Form, } from 'post'
+import { Spinner } from 'components'
+import { useDispatch, useSelector } from 'react-redux'
+import { PostsList, Form, getPosts, } from 'post'
 import { Store } from 'store'
 import { useState } from 'react'
 
@@ -36,8 +36,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function Home() {
     const [currentId, setCurrentId] = useState(null)
-    const { posts, loading } = useSelector((state: Store) => state?.postsReducer);
-    const classes = useStyles()
+    const { posts, loading, userPosts } = useSelector((state: Store) => state?.postsReducer);
+    const dispatch = useDispatch()
+    const classes = useStyles();
+
+    useEffect(() => {
+        if (userPosts.length === 0) {
+            dispatch(getPosts());
+        }
+    }, [dispatch, userPosts.length])
 
     return (
         loading ? <Spinner /> : <Box className={classes.root}>

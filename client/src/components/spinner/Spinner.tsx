@@ -8,7 +8,7 @@ export const useStyles = makeStyles({
   spinnerContainer: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "20%",
+    marginTop: "10%",
   },
 });
 

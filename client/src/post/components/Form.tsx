@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SetStateAction, useEffect } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import { Box, Button, createStyles, IconButton, makeStyles, Paper, TextField, Theme, Typography } from '@material-ui/core'
 import { useState } from 'react';
 import { Spacer } from 'components';
@@ -8,6 +8,7 @@ import { createNewPost, updatePost } from '../actions';
 import { IPost } from 'post/components/Post';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import { Storage } from 'storage';
+import { convertBase64 } from 'utils';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -47,7 +48,8 @@ export function Form({ currentId, setCurrentId }: IForm) {
         title: "",
         message: "",
         tags: [],
-        selectedFile: ""
+        selectedFile: "",
+        creatorId: ""
     });
     const { postLoading } = useSelector((state: Store) => state?.postsReducer)
     const post = useSelector((state: Store) => currentId ? state?.postsReducer.posts.find(p => p._id === currentId) : null);
@@ -63,7 +65,7 @@ export function Form({ currentId, setCurrentId }: IForm) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!currentId) {
-            dispatch(createNewPost({ ...postData, name: user?.result?.name }))
+            dispatch(createNewPost({ ...postData, name: user?.result?.name, creatorId: user?.result?._id ? user?.result?._id : user?.result?.googleId }))
         } else {
             dispatch(updatePost(currentId.toString(), { ...postData, name: user?.result?.name }))
         }
@@ -87,22 +89,6 @@ export function Form({ currentId, setCurrentId }: IForm) {
             const base64 = await convertBase64(file)
             setPostData({ ...postData, selectedFile: base64 as string })
         }
-        console.log(event.target.files)
-    }
-
-    const convertBase64 = async (file: Blob) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader()
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result)
-            }
-
-            fileReader.onerror = () => {
-                reject(fileReader.result)
-            }
-        })
     }
 
     return (

@@ -6,11 +6,12 @@ const { Types } = mongoose;
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
-    res.send(postMessages);
 
     return res.status(200).json(postMessages);
   } catch (error) {
-    return res.status(404).json({ message: error.message });
+    if (error) {
+      return res.status(404).json({ message: error.message });
+    }
   }
 };
 
@@ -31,7 +32,7 @@ export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new PostMessage({
     ...post,
-    creatorId: req.userId,
+    creatorId:  req.userId ? req.userId : req.body.creatorId,
     createdAt: new Date().toISOString(),
   });
   try {
@@ -66,4 +67,18 @@ export const deletePost = async (req, res) => {
 
   await PostMessage.findByIdAndRemove(id);
   res.json({ message: "Post deleted successfully" });
+};
+
+export const getUserPostsPhotos = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const postMessages = await PostMessage.find();
+    const loggedUserPosts = postMessages.filter((post) => post.creatorId === id)
+    const userPostsPhotos = loggedUserPosts.map((photo) => photo.selectedFile)
+
+    return res.status(200).json(userPostsPhotos);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
 };

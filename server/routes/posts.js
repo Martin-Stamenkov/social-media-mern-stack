@@ -5,6 +5,7 @@ import {
   deletePost,
   updatePost,
   getPostDetails,
+  getUserPostsPhotos
 } from "../controllers/posts.js";
 import auth from "../middleware/auth.js";
 
@@ -19,5 +20,7 @@ router.post("/", auth, createPost);
 router.patch("/:id", auth, updatePost);
 
 router.delete("/:id", auth, deletePost);
+
+router.get("/photos/:id", getUserPostsPhotos);
 
 export default router;

@@ -26,7 +26,8 @@ export interface IPost {
     createdAt?: string,
     setCurrentId?: any,
     creatorId?: string,
-    name?: string
+    name?: string,
+    withEditOption?: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export function Post({ _id, title, name, message, selectedFile, tags, createdAt, setCurrentId }: IPost) {
+export function Post({ _id, title, name, message, selectedFile, tags, createdAt, setCurrentId, withEditOption }: IPost) {
     const classes = useStyles();
     const dispatch = useDispatch()
 
@@ -62,9 +63,9 @@ export function Post({ _id, title, name, message, selectedFile, tags, createdAt,
                     </Avatar>
                 }
                 action={
-                    <IconButton onClick={() => setCurrentId(_id)} aria-label="settings">
+                    withEditOption ? <IconButton onClick={() => setCurrentId(_id)} aria-label="settings">
                         <MoreHorizonIcon />
-                    </IconButton>
+                    </IconButton> : null
                 }
                 title={name}
                 subheader={moment(createdAt).fromNow()}

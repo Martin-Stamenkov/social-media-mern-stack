@@ -1,8 +1,10 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import PostMessage from "../models/postMessage.js";
+import mongoose from "mongoose";
 
 import User from "../models/user.js";
+
+const { Types } = mongoose;
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -35,7 +37,8 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, firstName, lastName, confirmPassword } = req.body;
+  const { email, password, firstName, lastName, confirmPassword, imageUrl } =
+    req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -54,7 +57,8 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
-    })
+      imageUrl: imageUrl,
+    });
 
     const token = jwt.sign(
       { email: result.email, id: result._id },
@@ -73,12 +77,32 @@ export const getUser = async (req, res) => {
 
   try {
     const user = await User.findById(id);
-    const postMessages = await PostMessage.find();
-    user.posts = postMessages.filter((post) => post.creatorId === id)
-    res.send(user)
+    // const postMessages = await PostMessage.find();
+    // user.posts = postMessages.filter((post) => post.creatorId === id);
 
-    return res.status(200).json(user);
+    res.status(200).json(user);
+    return;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const uploadUserPhoto = async (req, res) => {
+  const { id } = req.params;
+  const imageUrl = req.body.data.imageUrl;
+
+  try {
+    const uploadedPhoto = await User.findByIdAndUpdate(
+      id,
+      { imageUrl },
+      { new: true }
+    );
+    if (!Types.ObjectId.isValid(id)) {
+      return res.status(404).send("No user with that id");
+    }
+    res.status(200).json(uploadedPhoto);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};

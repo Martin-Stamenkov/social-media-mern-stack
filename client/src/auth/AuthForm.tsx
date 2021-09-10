@@ -48,11 +48,11 @@ export function AuthForm() {
         email: "",
         password: "",
         confirmPassword: "",
+        imageUrl: ""
     });
     const { loading } = useSelector((state: any) => state.authReducer)
 
     const responseGoogleSuccess = async (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-
         if ("profileObj" in res && "tokenId" in res) {
             const result = (res?.profileObj)
             const token = res?.tokenId;

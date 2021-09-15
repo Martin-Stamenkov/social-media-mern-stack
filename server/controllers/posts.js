@@ -20,7 +20,6 @@ export const getPostDetails = async (req, res) => {
 
   try {
     const postMessages = await PostMessage.findById(id);
-    res.send(postMessages);
 
     return res.status(200).json(postMessages);
   } catch (error) {
@@ -69,15 +68,15 @@ export const deletePost = async (req, res) => {
   res.json({ message: "Post deleted successfully" });
 };
 
-export const getUserPostsPhotos = async (req, res) => {
+export const getUserPhotos = async (req, res) => {
   const { id } = req.params;
 
   try {
     const postMessages = await PostMessage.find();
     const loggedUserPosts = postMessages.filter((post) => post.creatorId === id)
-    const userPostsPhotos = loggedUserPosts.map((photo) => photo.selectedFile)
+    const userPhotos = loggedUserPosts.map((photo) => photo.selectedFile)
 
-    return res.status(200).json(userPostsPhotos);
+    return res.status(200).json(userPhotos);
   } catch (error) {
     return res.status(404).json({ message: error.message });
   }

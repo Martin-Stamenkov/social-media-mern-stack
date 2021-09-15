@@ -51,7 +51,7 @@ export function Form({ currentId, setCurrentId }: IForm) {
         selectedFile: "",
         creatorId: ""
     });
-    const { postLoading } = useSelector((state: Store) => state?.postsReducer)
+    const { postsLoading } = useSelector((state: Store) => state?.postsReducer)
     const post = useSelector((state: Store) => currentId ? state?.postsReducer.posts.find(p => p._id === currentId) : null);
     const isInvalid = (postData.title === "" || postData.message === "" || postData.selectedFile === "");
     const user = JSON.parse(Storage.getItem("profile") || "null")
@@ -137,7 +137,7 @@ export function Form({ currentId, setCurrentId }: IForm) {
 
                     {postData.selectedFile ? <img className={classes.image} src={postData.selectedFile} alt="upload" /> : null}
                 </Box>
-                <Button disabled={postLoading || isInvalid} type="submit" variant="contained" color="primary">{!isInvalid ? "Submit" : "Please fill the fields"}</Button>
+                <Button disabled={postsLoading || isInvalid} type="submit" variant="contained" color="primary">{!isInvalid ? "Submit" : "Please fill the fields"}</Button>
                 <Spacer height={8} />
                 <Button onClick={clear} variant="contained" color="secondary">Clear</Button>
             </Paper>

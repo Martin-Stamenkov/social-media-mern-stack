@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "center",
             marginTop: "30px",
             [theme.breakpoints.between(280, 600)]: {
                 flexDirection: "column-reverse"

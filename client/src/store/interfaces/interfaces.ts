@@ -5,7 +5,8 @@ export interface Store {
         posts: IPost[];
         loading: boolean;
         error: string;
-        postLoading: boolean;
+        postsLoading: boolean;
         userPosts: IPost[];
+        photos: string[];
     }
 }

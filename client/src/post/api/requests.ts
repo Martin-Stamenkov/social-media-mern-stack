@@ -1,5 +1,5 @@
 import { API } from "api";
-import { postUrl } from "./endpoints";
+import { postDetailsUrl, postUrl, userPhotosUrl } from "./endpoints";
 
 export interface ICreatePost {
     title: string,
@@ -24,4 +24,12 @@ export const updatePost = async (id: string, updatedData: ICreatePost) => {
 
 export const deletePost = async (id: string) => {
     return await API.delete(`${postUrl}/${id}`)
+}
+
+export const getUserPhotos = async (id: string) => {
+    return await API.get(`${userPhotosUrl}/${id}`)
+}
+
+export const getPostDetails = async (id: string) => {
+    return await API.get(postDetailsUrl(id))
 }

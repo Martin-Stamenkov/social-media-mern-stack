@@ -47,7 +47,7 @@ export function Header() {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar>
                     <Typography style={{ cursor: "pointer" }} onClick={() => history.push("/")} variant="h6" className={classes.title}>
                         Memories

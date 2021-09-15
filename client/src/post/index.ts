@@ -1,6 +1,7 @@
 export { Post } from "./components/Post"
 export { Form } from "./components/Form"
 export { PostsList } from "./components/PostsList"
+export { PostDetails } from "./components/PostDetails"
 export type { IPost } from "./components/Post"
 export  * from "./actions/postsActions"
 export  * from "./reducers/postsReducer"

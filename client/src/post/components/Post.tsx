@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { removePost } from 'post/actions/postsActions';
 import { Box } from '@material-ui/core';
 import moment from 'moment';
+import { useHistory } from 'react-router';
 
 export interface IPost {
     _id?: string,
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
             maxHeight: 430,
             height: 430,
             // flex: "50%",
-            margin: 16
+            margin: 16,
+            cursor: "pointer"
         },
         media: {
             height: 0,
@@ -50,16 +52,26 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export function Post({ _id, title, name, message, selectedFile, tags, createdAt, setCurrentId, withEditOption }: IPost) {
+export function Post({ _id, title, name, message, selectedFile, tags, createdAt, setCurrentId, withEditOption, creatorId }: IPost) {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation()
+        history.push(`post/${_id}`)
+    }
+    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        _id && dispatch(removePost(_id));
+    }
 
     return (
-        <Card className={classes.root}>
+        <Card onClick={(e) => handleClick(e)} className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        R
+                        {name && name[0]}
                     </Avatar>
                 }
                 action={
@@ -92,7 +104,7 @@ export function Post({ _id, title, name, message, selectedFile, tags, createdAt,
                         Like
                     </Typography>
                 </IconButton>
-                <IconButton onClick={() => _id && dispatch(removePost(_id))} aria-label="delete">
+                <IconButton onClick={(e) => handleDeleteClick(e)} aria-label="delete">
                     <Typography variant="body2" color="textSecondary" component="p">
                         Delete
                     </Typography>

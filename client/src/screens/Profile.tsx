@@ -1,18 +1,18 @@
+import React, { ChangeEvent, useMemo, useRef, useState, useEffect } from 'react'
 import { Box, createStyles, Paper, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core'
-import React, { ChangeEvent, useMemo, useRef, useState } from 'react'
 import defaultAvatar from "assets/defaultAvatar.png"
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, PostsList } from 'post'
-import { Spacer, Spinner } from 'components'
+import { Spacer, Spinner, ImagesList } from 'components'
 import { Store } from 'store'
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import PhotoLibraryOutlinedIcon from '@material-ui/icons/PhotoLibraryOutlined';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import { convertBase64 } from 'utils'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import CreateIcon from '@material-ui/icons/Create';
 import { uploadUserPhoto } from 'auth'
 import { Storage } from 'storage'
+import PhotoSizeSelectActualOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActualOutlined';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -83,7 +83,14 @@ export function Profile() {
     const wrapperRef = useRef(null) as any
     const { authData } = useSelector((state: any) => state?.authReducer);
     const dispatch = useDispatch();
-    const googleId = useMemo(() => (JSON.parse(Storage.getItem("profile") || 'null')?.result.googleId),[])
+    const googleId = useMemo(() => (JSON.parse(Storage.getItem("profile") || 'null')?.result.googleId), []);
+
+    // useEffect(() => {
+    //     if(photos.length > 0){
+    //         return;
+    //     }
+    //     dispatch(getUserPhotos(authData?._id ? authData?._id : googleId))
+    // },[authData?._id, dispatch, googleId, photos.length])
 
     const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
         setTabIndex(value);
@@ -123,7 +130,8 @@ export function Profile() {
                             <Box className={classes.iconContainer}>
                                 <PhotoCameraIcon fontSize="large" />
                             </Box>
-                        </Box>}
+                        </Box>
+                    }
                 </Box>
                 <Spacer height={20} />
                 <Box display="flex" justifyContent="center">
@@ -138,7 +146,7 @@ export function Profile() {
                     >
                         <Tab icon={<PhotoLibraryOutlinedIcon />} label="Your Posts" />
                         <Tab icon={<PersonPinIcon />} label="About" />
-                        <Tab icon={<FavoriteBorderIcon />} label="Liked" />
+                        <Tab icon={<PhotoSizeSelectActualOutlinedIcon />} label="Photos" />
                     </Tabs>
                 </Box>
             </Paper>
@@ -161,6 +169,11 @@ export function Profile() {
             {
                 tabIndex === 1 ?
                     <Form setCurrentId={setCurrentId} currentId={currentId} />
+                    : null
+            }
+            {
+                tabIndex === 2 ?
+                   <ImagesList posts={userPosts}  />
                     : null
             }
         </>

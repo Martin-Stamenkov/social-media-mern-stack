@@ -3,7 +3,7 @@ import { AuthForm, getUser } from 'auth'
 import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { Home, Profile } from 'screens'
-import { getPosts } from 'post'
+import { getPosts, PostDetails } from 'post'
 import { GET_USER_SUCCESS } from 'auth/types'
 import { userData } from 'utils'
 
@@ -26,6 +26,8 @@ export function Router() {
         <>
             <Switch>
                 <Route exact path={"/"} component={Home} />
+                <Route exact  path={"/post/:id"} render={() => <PostDetails key={Math.random()} />}
+ />
                 <Route exact path={"/profile"} component={Profile} />
                 <Route exact path={"/auth"} component={AuthForm} />
             </Switch>

@@ -5,7 +5,7 @@ import {
   deletePost,
   updatePost,
   getPostDetails,
-  getUserPostsPhotos
+  getUserPhotos
 } from "../controllers/posts.js";
 import auth from "../middleware/auth.js";
 
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", getPosts);
 
-router.get("/:id", auth, getPostDetails);
+router.get("/:id", getPostDetails);
 
 router.post("/", auth, createPost);
 
@@ -21,6 +21,6 @@ router.patch("/:id", auth, updatePost);
 
 router.delete("/:id", auth, deletePost);
 
-router.get("/photos/:id", getUserPostsPhotos);
+router.get("/photos/:id", getUserPhotos);
 
 export default router;

@@ -11,9 +11,13 @@ import {
     GET_USER_SUCCESS,
     UPLOAD_USER_PHOTO_ERROR,
     UPLOAD_USER_PHOTO_REQUEST,
-    UPLOAD_USER_PHOTO_SUCCESS
+    UPLOAD_USER_PHOTO_SUCCESS,
+    UPDATE_USER_FAILURE,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS
 } from "../types"
 import { History } from 'history';
+import { IDetailsData } from "../api/requests";
 
 
 export const googleAuthLogin = (data: any) => (dispatch: ThunkDispatch<void, void, Action>) => {
@@ -87,10 +91,19 @@ export const getUser = (id: string) => async (dispatch: ThunkDispatch<void, void
     }
 }
 
+export const  updateUser = (id: string, updatedData: IDetailsData) => async (dispatch: ThunkDispatch<void, void, Action>) => {
+    dispatch({ type: UPDATE_USER_REQUEST })
+    try {
+        const { data } = await api.updateUserData(id, updatedData)
+        dispatch({ type: UPDATE_USER_SUCCESS, payload: data })
+    } catch (error) {
+            dispatch({ type: UPDATE_USER_FAILURE, payload: error })
+    }
+}
+
 export const uploadUserPhoto = (id: string, uploadedData: string) => async (dispatch: ThunkDispatch<void, void, Action>) => {
     dispatch({ type: UPLOAD_USER_PHOTO_REQUEST })
-    console.log("test", uploadedData)
-    console.log("test")
+
     try {
         const { data } = await api.uploadUserPhoto(id, uploadedData)
         console.log(data)

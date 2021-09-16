@@ -52,7 +52,7 @@ export function Header() {
                     <Typography style={{ cursor: "pointer" }} onClick={() => history.push("/")} variant="h6" className={classes.title}>
                         Memories
                     </Typography>
-                    {user ? <Chip onClick={() => history.push("/profile")} color="primary" label={`${user?.result?.name}`} avatar={<Avatar src={authData?.imageUrl} />} /> : null}
+                    {user ? <Chip onClick={() => history.push(`/profile/${authData?._id}`)} color="primary" label={`${user?.result?.name}`} avatar={<Avatar src={authData?.imageUrl} />} /> : null}
 
                     <Button onClick={handleLoginClick} color="inherit">
                         <Typography>{user ? "Logout" : "Login"}</Typography></Button>

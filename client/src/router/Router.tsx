@@ -28,7 +28,7 @@ export function Router() {
                 <Route exact path={"/"} component={Home} />
                 <Route exact  path={"/post/:id"} render={() => <PostDetails key={Math.random()} />}
  />
-                <Route exact path={"/profile"} component={Profile} />
+                <Route exact path={"/profile/:id"} component={Profile} />
                 <Route exact path={"/auth"} component={AuthForm} />
             </Switch>
         </>

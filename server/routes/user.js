@@ -4,6 +4,7 @@ import {
   login,
   register,
   uploadUserPhoto,
+  updateUserData
 } from "../controllers/user.js";
 import auth from "../middleware/auth.js";
 
@@ -16,5 +17,7 @@ router.post("/register", register);
 router.get("/:id", auth, getUser);
 
 router.patch("/upload/:id", auth, uploadUserPhoto);
+
+router.patch("/update/:id", auth, updateUserData);
 
 export default router;

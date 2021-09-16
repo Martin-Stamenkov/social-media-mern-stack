@@ -77,13 +77,11 @@ export const getUser = async (req, res) => {
 
   try {
     const user = await User.findById(id);
-    // const postMessages = await PostMessage.find();
-    // user.posts = postMessages.filter((post) => post.creatorId === id);
 
     res.status(200).json(user);
     return;
   } catch (error) {
-    console.log(error);
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -103,6 +101,25 @@ export const uploadUserPhoto = async (req, res) => {
     res.status(200).json(uploadedPhoto);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateUserData = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body.data;
+
+  try {
+    const updateData = await User.findByIdAndUpdate(
+      id,
+       data ,
+      { new: true }
+    );
+    if (!Types.ObjectId.isValid(id)) {
+      return res.status(404).send("No user with that id");
+    }
+    res.status(200).json(updateData);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

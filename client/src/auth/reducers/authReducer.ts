@@ -5,6 +5,9 @@ import { AUTH_FAILURE,
     GET_USER_REQUEST, 
     GET_USER_SUCCESS, 
     LOGOUT, 
+    UPDATE_USER_FAILURE, 
+    UPDATE_USER_REQUEST, 
+    UPDATE_USER_SUCCESS, 
     UPLOAD_USER_PHOTO_ERROR, 
     UPLOAD_USER_PHOTO_REQUEST, 
     UPLOAD_USER_PHOTO_SUCCESS } from "../types";
@@ -33,6 +36,12 @@ export const authReducer = (state = initialState, action: { type: string, payloa
         case GET_USER_SUCCESS:
             return { ...state, loading: false, authData: action?.payload }
         case GET_USER_FAILURE:
+            return { ...state, error: action?.payload, loading: false }
+        case UPDATE_USER_REQUEST:
+            return { ...state, loading: true }
+        case UPDATE_USER_SUCCESS:
+            return { ...state, loading: false, authData: action?.payload }
+        case UPDATE_USER_FAILURE:
             return { ...state, error: action?.payload, loading: false }
         case  UPLOAD_USER_PHOTO_REQUEST:
             return { ...state }

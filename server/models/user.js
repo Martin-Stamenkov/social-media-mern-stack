@@ -25,6 +25,22 @@ const userSchema = Schema({
   },
   imageUrl: {
     type: String,
+  },
+  hometown: {
+    type: String,
+    default: null,
+  },
+  city: {
+    type: String,
+    default: null,
+  },
+  occupation: {
+    type: String,
+    default: null,
+  },
+  education: {
+    type: String,
+    default: null,
   }
 });
 

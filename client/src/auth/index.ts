@@ -1,4 +1,5 @@
 export { AuthForm } from "./AuthForm"
+export { DetailsForm } from "./DetailsForm"
 export * as api from "./api/requests"
 export * from "./actions/authActions"
 export * from "./reducers/authReducer"

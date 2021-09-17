@@ -5,13 +5,13 @@ import { IPost, Post } from './Post'
 
 interface IPostsList {
     posts: IPost[],
-    setCurrentId: SetStateAction<{}>
+    setCurrentId?: SetStateAction<{}>
 }
 
 export function PostsList({ posts, setCurrentId }: IPostsList) {
 
     return (
-        <>
+        <div>
             {posts && posts.map((post: IPost, index: number) =>
                 <Post
                     setCurrentId={setCurrentId}
@@ -22,8 +22,10 @@ export function PostsList({ posts, setCurrentId }: IPostsList) {
                     title={post.title} message={post.message}
                     tags={post.tags}
                     selectedFile={post.selectedFile}
-                    createdAt={post.createdAt} />
+                    createdAt={post.createdAt}
+                    creatorId={post.creatorId}
+                     />
             ).reverse()}
-        </>
+        </div>
     )
 }

@@ -44,10 +44,9 @@ export function DetailsForm() {
         education: authData.education,
         occupation: authData.occupation,
     });
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(updateUser(authData._id, formData))
+        dispatch(updateUser(authData._id ? authData._id : authData?.googleId, formData))
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

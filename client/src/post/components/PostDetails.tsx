@@ -10,7 +10,7 @@ import { getPostDetails } from '../api/requests';
 import { useHistory, useParams } from 'react-router';
 import { IPost } from 'post';
 import { Spinner } from 'components';
-import { Avatar, Box, Button, IconButton } from '@material-ui/core';
+import { Avatar, Box, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { Store } from 'store';
@@ -95,9 +95,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function PostDetails() {
     const classes = useStyles();
-    const { id }: any = useParams()
+    const { id }: { id: string } = useParams()
     const [details, setDetails] = useState<IPost | null>(null);
     const { loading, posts } = useSelector((state: Store) => state?.postsReducer);
+    const { authData } = useSelector((state: any) => state?.authReducer);
     const history = useHistory();
     const relatedCreatorPosts = useMemo(() => posts
         .filter((posts: IPost) => posts.creatorId === details?.creatorId), [details?.creatorId, posts])
@@ -138,7 +139,7 @@ export function PostDetails() {
                 {/* <Box className={classes.toolbar} /> */}
                 <Divider />
                 <List>
-                    <ListItem button onClick={() => history.push("/profile")} >
+                    <ListItem button onClick={() => history.push(authData.id === details.creatorId ? "/profile" : `/user/${details.creatorId}`)} >
                         <Avatar className={classes.avatar}  >{details.name && details.name[0]}</Avatar>
                         <Box marginLeft="4px">
                             <Typography variant="subtitle2" >{details.name}</Typography>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useRef, useState, useEffect } from 'react'
+import React, { ChangeEvent, useMemo, useRef, useState } from 'react'
 import { Box, createStyles, Paper, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core'
 import defaultAvatar from "assets/defaultAvatar.png"
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +10,7 @@ import PhotoLibraryOutlinedIcon from '@material-ui/icons/PhotoLibraryOutlined';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import { convertBase64 } from 'utils'
 import CreateIcon from '@material-ui/icons/Create';
-import { uploadUserPhoto } from 'auth'
+import { DetailsForm, uploadUserPhoto } from 'auth'
 import { Storage } from 'storage'
 import PhotoSizeSelectActualOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActualOutlined';
 
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
         uploadImageContainer: {
             display: "flex",
             justifyContent: "center",
-            cursor: "pointer",
             "&:hover": {
                 "& $hover": {
                     borderRadius: "50%",
@@ -62,7 +61,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: 250,
             position: "absolute",
             marginBottom: "-200px",
-            opacity: 0.5
+            opacity: 0.5,
+            cursor: "pointer",
         },
         hoverItem: {
             position: "absolute",
@@ -78,19 +78,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export function Profile() {
     const { userPosts, loading } = useSelector((state: Store) => state?.postsReducer);
     const [currentId, setCurrentId] = useState(null)
-    const [tabIndex, setTabIndex] = useState(0);
     const classes = useStyles();
     const wrapperRef = useRef(null) as any
     const { authData } = useSelector((state: any) => state?.authReducer);
     const dispatch = useDispatch();
-    const googleId = useMemo(() => (JSON.parse(Storage.getItem("profile") || 'null')?.result.googleId), []);
-
-    // useEffect(() => {
-    //     if(photos.length > 0){
-    //         return;
-    //     }
-    //     dispatch(getUserPhotos(authData?._id ? authData?._id : googleId))
-    // },[authData?._id, dispatch, googleId, photos.length])
+    const googleId = useMemo(() => (JSON.parse(Storage.getItem("profile") || 'null')?.result?.googleId), []);
+    const [tabIndex, setTabIndex] = useState(googleId ? 1 : 0);
 
     const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
         setTabIndex(value);
@@ -108,9 +101,9 @@ export function Profile() {
         <>
             <Paper className={classes.container}>
                 <Spacer height={40} />
-                <Box onClick={() => { wrapperRef.current && wrapperRef.current.click() }} className={classes.uploadImageContainer}>
+                <Box className={classes.uploadImageContainer}>
                     {!googleId &&
-                        <span className={classes.hover}>
+                        <span onClick={() => { wrapperRef.current && wrapperRef.current.click() }} className={classes.hover}>
                             <Box className={classes.hoverItem}>
                                 <CreateIcon fontSize="large" />
                                 <Typography>Change profile picture</Typography>
@@ -144,8 +137,8 @@ export function Profile() {
                         indicatorColor="primary"
                         textColor="primary"
                     >
+                        {!googleId ? <Tab icon={<PersonPinIcon />} label="About" /> : <Tab style={{ display: "none" }} />}
                         <Tab icon={<PhotoLibraryOutlinedIcon />} label="Your Posts" />
-                        <Tab icon={<PersonPinIcon />} label="About" />
                         <Tab icon={<PhotoSizeSelectActualOutlinedIcon />} label="Photos" />
                     </Tabs>
                 </Box>
@@ -153,6 +146,11 @@ export function Profile() {
             <Spacer height={20} />
             {
                 tabIndex === 0 ?
+                    <DetailsForm />
+                    : null
+            }
+            {
+                tabIndex === 1 ?
                     <Box display="flex" justifyContent="center">
                         {loading ? <Spinner /> :
                             <>
@@ -164,16 +162,12 @@ export function Profile() {
                                 </Box>
                             </>
                         }
-                    </Box> : null
-            }
-            {
-                tabIndex === 1 ?
-                    <Form setCurrentId={setCurrentId} currentId={currentId} />
+                    </Box>
                     : null
             }
             {
                 tabIndex === 2 ?
-                   <ImagesList posts={userPosts}  />
+                    <ImagesList posts={userPosts} />
                     : null
             }
         </>

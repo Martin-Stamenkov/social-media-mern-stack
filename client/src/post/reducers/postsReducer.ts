@@ -39,8 +39,10 @@ export const postsReducer = (state = initialState, action: { type: string, paylo
             return {
                 ...state,
                 posts: action.payload,
-                userPosts: action?.payload.filter((post: IPost) => post.creatorId === (JSON.parse(Storage.getItem("profile") || "null")?.result?._id
-                    ? JSON.parse(Storage.getItem("profile") || "null")?.result?._id : JSON.parse(Storage.getItem("profile") || "null")?.result?.googleId)),
+                userPosts: action?.payload.filter((post: IPost) => post.creatorId === (JSON.parse(Storage.getItem("profile") || "null")
+                    ?.result?._id
+                    ? JSON.parse(Storage.getItem("profile") || "null")?.result?._id : JSON.parse(Storage.getItem("profile") || "null")
+                        ?.result?.googleId)),
                 loading: false
             }
         case FETCH_ALL_FAIL:
@@ -55,13 +57,17 @@ export const postsReducer = (state = initialState, action: { type: string, paylo
                 postsLoading: true
             }
         case CREATE_POST_SUCCESS:
-            console.log(state.photos.length)
             return {
                 ...state,
                 posts: [...state.posts, action.payload],
                 userPosts: [...state.userPosts, action.payload],
                 photos: [...state.photos, action.payload.selectedFile],
                 postsLoading: false,
+            }
+        case "SET_USER_POSTS":
+            return {
+                ...state,
+                userPosts:  action.payload
             }
         case CREATE_POST_FAIL:
             return {
@@ -90,7 +96,7 @@ export const postsReducer = (state = initialState, action: { type: string, paylo
         case DELETE_FAIL:
             return {
                 ...state,
-               error: action.payload
+                error: action.payload
             }
         case CLEAR_USER_POSTS:
             return {

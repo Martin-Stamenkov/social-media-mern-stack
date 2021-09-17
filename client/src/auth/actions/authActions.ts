@@ -21,6 +21,7 @@ import { IDetailsData } from "../api/requests";
 
 
 export const googleAuthLogin = (data: any) => (dispatch: ThunkDispatch<void, void, Action>) => {
+    dispatch({ type: AUTH_REQUEST })
     try {
         dispatch({ type: AUTH_SUCCESS, payload: data })
     } catch (error) {

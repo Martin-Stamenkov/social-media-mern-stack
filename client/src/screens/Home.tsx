@@ -37,11 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export function Home() {
     const [currentId, setCurrentId] = useState(null)
     const { posts, loading, userPosts } = useSelector((state: Store) => state?.postsReducer);
+    const { authData } = useSelector((state: any) => state?.authReducer);
     const dispatch = useDispatch()
     const classes = useStyles();
 
     useEffect(() => {
-        if (userPosts.length === 0) {
+        if (userPosts.length === 0 && authData) {
             dispatch(getPosts());
         }
     }, [dispatch, userPosts.length])

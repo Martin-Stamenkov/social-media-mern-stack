@@ -18,6 +18,17 @@ export const getPosts = () => async (dispatch: ThunkDispatch<void, void, Action>
     }
 }
 
+export const setUserPosts = (data: any) => async (dispatch: ThunkDispatch<void, void, Action>) => {
+    try {
+        dispatch({ type: "SET_USER_POSTS", payload: data })
+    } catch (error) {
+        if (error instanceof Error) {
+        } else {
+            console.log(error)
+        }
+    }
+}
+
 export const createNewPost = (newPost: ICreatePost) => async (dispatch: ThunkDispatch<void, void, Action>) => {
     dispatch({ type: CREATE_POST_REQUEST })
     try {

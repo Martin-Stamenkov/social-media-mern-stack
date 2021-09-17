@@ -85,6 +85,21 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const getListOfUsersByName = async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    const users = await (
+      await User.find()
+    ).filter((x) => x.name.toString().includes(name));
+
+    res.status(200).json(users);
+    return;
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
+
 export const uploadUserPhoto = async (req, res) => {
   const { id } = req.params;
   const imageUrl = req.body.data.imageUrl;
@@ -110,11 +125,7 @@ export const updateUserData = async (req, res) => {
   const data = req.body.data;
 
   try {
-    const updateData = await User.findByIdAndUpdate(
-      id,
-       data ,
-      { new: true }
-    );
+    const updateData = await User.findByIdAndUpdate(id, data, { new: true });
     if (!Types.ObjectId.isValid(id)) {
       return res.status(404).send("No user with that id");
     }

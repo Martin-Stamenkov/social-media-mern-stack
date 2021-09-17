@@ -6,6 +6,7 @@ import { Home, Profile } from 'screens'
 import { getPosts, PostDetails } from 'post'
 import { GET_USER_SUCCESS } from 'auth/types'
 import { userData } from 'utils'
+import { UserPage } from 'user'
 
 export function Router() {
     const dispatch = useDispatch()
@@ -26,10 +27,11 @@ export function Router() {
         <>
             <Switch>
                 <Route exact path={"/"} component={Home} />
-                <Route exact  path={"/post/:id"} render={() => <PostDetails key={Math.random()} />}
- />
-                <Route exact path={"/profile/:id"} component={Profile} />
+                <Route exact path={"/post/:id"} render={() => <PostDetails key={Math.random()} />} />
+                <Route exact path={"/profile"} component={Profile} />
+                <Route exact path={"/user/:id"} render={() => <UserPage key={Math.random()} /> } />
                 <Route exact path={"/auth"} component={AuthForm} />
+                <Route path="*" component={Home} />
             </Switch>
         </>
     )

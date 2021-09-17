@@ -1,0 +1,1 @@
+export const getListOfUserByNameUrl = (name: string) => `user/search?name=${name}` 

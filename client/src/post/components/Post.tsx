@@ -58,7 +58,6 @@ export function Post({ _id, title, name, message, selectedFile, tags, createdAt,
     const history = useHistory();
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation()
         history.push(`post/${_id}`)
     }
     const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

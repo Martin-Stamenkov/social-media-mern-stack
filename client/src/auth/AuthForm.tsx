@@ -81,6 +81,7 @@ export function AuthForm() {
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e)
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
